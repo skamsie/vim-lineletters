@@ -3,22 +3,22 @@
 " lists will automatically be excluded from main_chars.
 " Example:
 "   main_chars = ['a', 'b', 'c']
-"   control_chars = [';', 'b']
+"   prefix_chars = [';', 'b']
 "   => ['a', 'c', ';a', ';b', ';c', 'ba', 'bb', 'bc']
-function! s:symbols(main_chars, control_chars)
+function! s:symbols(main_chars, prefix_chars)
   let l:symbols = filter(
         \ copy(a:main_chars),
-        \ {idx, val -> index(g:ll_control_chars, val) == -1})
-  for c in a:control_chars
+        \ {idx, val -> index(g:ll_prefix_chars, val) == -1})
+  for c in a:prefix_chars
     let l:symbols += map(copy(a:main_chars), {i, v -> c . v})
   endfor
   return l:symbols
 endfunction
 
 let s:group = 'lineletters'
-let g:ll_control_chars = [',', 'j', 'f']
+let g:ll_prefix_chars = [',', 'j', 'f']
 let g:ll_main_chars = map(range(97, 97 + 25), 'nr2char(v:val)') " a -> z
-let g:ll_symbols = s:symbols(g:ll_main_chars, g:ll_control_chars)
+let g:ll_symbols = s:symbols(g:ll_main_chars, g:ll_prefix_chars)
 
 function! s:define_signs()
   for i in g:ll_symbols
@@ -43,7 +43,7 @@ function! s:go_to_sign()
         \ {'group' : 'lineletters'})[0]['signs']
   let l:first_char = nr2char(getchar())
   try
-    if index(g:ll_control_chars, l:first_char) == -1
+    if index(g:ll_prefix_chars, l:first_char) == -1
       let l:l = filter(l:signs,
             \ { idx, val -> val['name'] == l:first_char })
       exec 'normal! ' l:l[0]['id'] . 'gg'
@@ -53,6 +53,7 @@ function! s:go_to_sign()
               \ { idx, val -> val['name'] == l:first_char . l:second_char })
         exec 'normal! ' l:l[0]['id'] . 'gg'
     endif
+  " E684: list index out of range
   catch /E684/
   endtry
 endfunction
