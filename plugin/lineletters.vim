@@ -23,6 +23,9 @@ let s:main_chars =
 let s:highlight_group =
       \ get(g:lineletters_settings,
       \ 'highlight_group', 'LineNr')
+let s:after_jump_do =
+      \ get(g:lineletters_settings,
+      \ 'after_jump_do', '^')
 let s:prefix_chars =
       \ get(g:lineletters_settings,
       \ 'prefix_chars', [',', 'j', 'f'])
@@ -52,15 +55,15 @@ function! s:go_to_sign()
   let l:first_char = nr2char(getchar())
   try
     if index(s:prefix_chars, l:first_char) == -1
-      let l:l = filter(l:signs,
+      let l:line = filter(l:signs,
             \ { idx, val -> val['name'] == l:first_char })
-      exec 'normal! ' l:l[0]['id'] . 'gg'
     else
       let l:second_char = nr2char(getchar())
-        let l:l = filter(l:signs,
+        let l:line = filter(l:signs,
               \ { idx, val -> val['name'] == l:first_char . l:second_char })
-        exec 'normal! ' l:l[0]['id'] . 'gg'
     endif
+
+    exec 'normal! ' l:line[0]['id'] . 'gg' . s:after_jump_do
   " E684: list index out of range
   catch /E684/
   endtry
