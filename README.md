@@ -1,6 +1,6 @@
 # vim-lineletters
 
-Jump to any visible line in the buffer by using lettters instead of numbers.
+Jump to any visible line in the buffer by using letters instead of numbers.
 
 <img src="https://user-images.githubusercontent.com/7014744/102135236-f77a5b00-3e57-11eb-81d3-d93689fbe853.gif" width="732"/>
 
