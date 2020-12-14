@@ -1,3 +1,8 @@
+if exists('g:loaded_lineletters')
+  finish
+endif
+let g:loaded_lineletters = 1
+
 " Create the list of symbols to be used for the signs by combining the
 " main chars with the prefix chars; characters that are included in both
 " lists will automatically be excluded from main chars.
@@ -76,5 +81,6 @@ function! s:line_letters()
   call sign_unplace(s:group)
 endfunction
 
-autocmd VimEnter * call s:define_signs()
+call s:define_signs()
+
 nnoremap <silent> <Plug>LineLetters :call <SID>line_letters()<CR>
