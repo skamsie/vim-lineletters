@@ -36,7 +36,8 @@ let g:lineletters_settings = {
       
  " prefix_chars -> characters used as prefix after the single alphanumeric chars are consumed
  " highligh_group -> use a highlight group to colorize the signs
- "  (for ex. change to 'MoreMsg')
+ "  ex. change to 'MoreMsg'
  " after_jump_do: -> add normal command to be executed after jumping to line
- "  (for ex. '0' will jump to first char of the line)
+ "  ex. '0' will jump to first character of the line
+ "      '^' will jump to first non-blank character of the line
 ```
