@@ -2,7 +2,7 @@
 
 Jump to any visible line in the buffer by using lettters instead of numbers.
 
-<img src="https://user-images.githubusercontent.com/7014744/102127335-aadd5280-3e4c-11eb-92a6-ba1778dfc852.gif" width="732"/>
+<img src="https://user-images.githubusercontent.com/7014744/102135236-f77a5b00-3e57-11eb-81d3-d93689fbe853.gif" width="732"/>
 
 ## Install
 
