@@ -23,6 +23,7 @@ endfunction
 " Settings
 let g:lineletters_settings = get(g:, 'lineletters_settings', {})
 let s:group = 'lineletters'
+let s:priority = 100
 let s:main_chars =
       \ map(range(97, 97 + 25), 'nr2char(v:val)')
 let s:highlight_group =
@@ -48,7 +49,8 @@ function! s:place_sings()
   let l:counter = 0
   for i in range(line('w0'), line('w$'))[0: len(s:signs) - 1]
     call sign_place(i, s:group,
-          \ s:signs[counter], expand('%'), {'lnum' : i})
+          \ s:signs[counter], expand('%'),
+          \ {'lnum': i, 'priority': s:priority})
     let l:counter += 1
   endfor
 endfunction
