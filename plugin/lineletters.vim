@@ -9,7 +9,7 @@ let g:loaded_lineletters = 1
 " Example:
 "   main_chars = ['a', 'b', 'c']
 "   prefix_chars = [';', 'b']
-"   => ['a', 'c', ';a', ';b', ';c', 'ba', 'bb', 'bc']
+" Returns: ['a', 'c', ';a', ';b', ';c', 'ba', 'bb', 'bc']
 function! s:symbols(main_chars, prefix_chars)
   let l:symbols = filter(
         \ copy(a:main_chars),
@@ -39,6 +39,19 @@ let s:prefix_chars =
       \ 'prefix_chars', [',', 'j', 'f'])
 let s:signs = s:symbols(s:main_chars, s:prefix_chars)
 
+" Get all unfolded lines between 'w0' and 'w$'
+function! s:get_visible_lines()
+  let l:visible = []
+  for l in range(line('w0'), line('w$'))
+    let l:fc = foldclosed(l)
+    if l:fc == -1 || index(l:visible, l:fc) == -1
+      call add(l:visible, l)
+    endif
+  endfor
+
+  return l:visible
+endfunction
+
 " Example:
 "   {'name': 'LineLetterss', 'texthl': 'LineNr', 'text': ' s'}
 function! s:define_signs()
@@ -52,7 +65,7 @@ endfunction
 " Place signs on the visible lines in the current window
 function! s:place_sings()
   let l:counter = 0
-  for i in range(line('w0'), line('w$'))[0: len(s:signs) - 1]
+  for i in s:get_visible_lines()[0: len(s:signs) - 1]
     call sign_place(i, s:group,
           \ s:group . s:signs[counter], expand('%'),
           \ {'lnum': i, 'priority': s:priority})
