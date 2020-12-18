@@ -22,10 +22,12 @@ endfunction
 
 " Settings
 let g:lineletters_settings = get(g:, 'lineletters_settings', {})
-let s:group = 'lineletters'
+let s:group = 'LineLetters'
 let s:priority = 100
+" a -> z
 let s:main_chars =
-      \ map(range(97, 97 + 25), 'nr2char(v:val)')
+      \ get(g:lineletters_settings,
+      \ 'main_chars', map(range(97, 97 + 25), 'nr2char(v:val)'))
 let s:highlight_group =
       \ get(g:lineletters_settings,
       \ 'highlight_group', 'LineNr')
@@ -37,10 +39,13 @@ let s:prefix_chars =
       \ 'prefix_chars', [',', 'j', 'f'])
 let s:signs = s:symbols(s:main_chars, s:prefix_chars)
 
+" Example:
+"   {'name': 'LineLetterss', 'texthl': 'LineNr', 'text': ' s'}
 function! s:define_signs()
   for i in s:signs
-    call sign_define(i,
-          \ {'text': len(i) == 1 ? ' ' . i : i, 'texthl': s:highlight_group})
+    call sign_define(s:group . i,
+          \ {'text': len(i) == 1 ? ' ' . i : i,
+          \'texthl': s:highlight_group})
   endfor
 endfunction
 
@@ -49,7 +54,7 @@ function! s:place_sings()
   let l:counter = 0
   for i in range(line('w0'), line('w$'))[0: len(s:signs) - 1]
     call sign_place(i, s:group,
-          \ s:signs[counter], expand('%'),
+          \ s:group . s:signs[counter], expand('%'),
           \ {'lnum': i, 'priority': s:priority})
     let l:counter += 1
   endfor
@@ -58,19 +63,20 @@ endfunction
 function! s:go_to_sign()
   let l:signs = sign_getplaced(
         \ expand('%'),
-        \ {'group' : 'lineletters'})[0]['signs']
+        \ { 'group': s:group })[0]['signs']
   let l:first_char = nr2char(getchar())
+
   try
     if index(s:prefix_chars, l:first_char) == -1
-      let l:line = filter(l:signs,
-            \ { idx, val -> val['name'] == l:first_char })
+      let l:sign = s:group . l:first_char
     else
       let l:second_char = nr2char(getchar())
-        let l:line = filter(l:signs,
-              \ { idx, val -> val['name'] == l:first_char . l:second_char })
+      let l:sign = s:group . l:first_char . l:second_char
     endif
 
+    let l:line = filter(l:signs, { idx, val -> val['name'] == l:sign })
     exec 'normal! ' l:line[0]['id'] . 'gg' . s:after_jump_do
+
   " E684: list index out of range
   catch /E684/
   endtry
