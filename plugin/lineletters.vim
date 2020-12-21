@@ -1,7 +1,7 @@
-"if exists('g:loaded_lineletters')
-"  finish
-"endif
-"let g:loaded_lineletters = 1
+if exists('g:loaded_lineletters')
+  finish
+endif
+let g:loaded_lineletters = 1
 
 " Create the list of symbols to be used for the signs by combining the
 " main chars with the prefix chars; characters that are included in both
