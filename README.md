@@ -25,6 +25,8 @@ map <silent>, <Plug>LineLetters
 Use the mapping you chose to show signs on each of the visible lines in the buffer. 
 Type the character(s) you see in the sign column to jump to that line.  
 
+You can check the documentation at any time with `:help lineletters`
+
 ## Settings
 
 By default you don't need to configure anything, but if you want to change the defaults, you can do it via the `g:lineletters_settings` dictionary. For example you can add something like this to your `.vimrc`:

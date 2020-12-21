@@ -1,0 +1,63 @@
+*lineletters.txt*
+
+Author:  skamsie
+Website: https://github.com/skamsie/vim-lineletters
+
+==============================================================================
+CONTENTS                                           *lineletters*
+
+1. Introduction .................................. |lineletters-intro|
+2. Usage ......................................... |lineletters-usage|
+3. Configuration ................................. |lineletters-configuration|
+==============================================================================
+
+
+INTRODUCTION                                       *lineletters-intro*
+
+Jump to any visible line in the buffer by using letters instead of numbers.
+Works in normal and visual modes.
+Why? Because letters are much easier to touch type than numbers.
+
+USAGE                                              *lineletters-usage*
+
+By default there is no key mapping, to create one, add this in your `.vimrc` and
+replace `,` with whatever you like (even though `,` is a good choice if you don't
+normall use it). Ideally it should be a one character mapping.
+>
+  map <silent>, <Plug>LineLetters
+<
+Use the mapping you chose to show signs on each of the visible lines in the
+buffer. Type the character(s) you see in the sign column to jump to that line.
+
+CONFIGURATION                                      *lineletters-configuration*
+
+By default you don't need to configure anything, but if you want to change the
+defaults, you can do it via the `g:lineletters_settings` dictionary. For example
+you can add something like this to your .vimrc:
+>
+  let g:lineletters_settings = {
+        \ 'main_chars': map(range(100, 120), 'nr2char(v:val)'),
+        \ 'prefix_chars': [',', ';', 'j'],
+        \ 'highlight_group': 'MoreMsg',
+        \ 'after_jump_do': '0'
+        \ }
+<
+Configuration Options~
+
+`main_chars`
+  main characters used for the signs column
+  default: ['a', ..., 'z']
+
+`prefix_chars`
+  characters used to prefix `main_chars` after they are consumed
+  default: [',', 'j', 'f']
+
+`highlight_group`
+  highlight group used to colorize the signs
+  default: 'LineNr'
+
+`after_jump_do`
+  command to be executed after jumping to line (only in normal mode)
+  default: '^'
+
+vim:ft=help
