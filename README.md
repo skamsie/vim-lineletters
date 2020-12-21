@@ -1,6 +1,6 @@
 # vim-lineletters
 
-Jump to any visible line in the buffer by using letters instead of numbers.
+Jump to any visible line in the buffer by using letters instead of numbers. Works in normal and visual modes.
 
 **Why?** Because letters are much easier to touch type than numbers (๑˃̵ᴗ˂̵)و
 
@@ -19,7 +19,7 @@ Plug 'skamsie/vim-lineletters'
 By default there is no key mapping, to create one, add this in your `.vimrc` and replace `,` with whatever you like (even though `,` is a good choice if you don't normall use it). Ideally it should be a one character mapping.
 
 ```vim
-nmap <silent>, <Plug>LineLetters
+map <silent>, <Plug>LineLetters
 ```
 
 Use the mapping you chose to show signs on each of the visible lines in the buffer. 
@@ -52,7 +52,7 @@ let g:lineletters_settings = {
 |--------------------|-------------------|--------------------------------------------|
 | highlight_group    | 'LineNr'          | highlight group used to colorize the signs |
 |--------------------|-------------------|--------------------------------------------|
-| after_jump_do      | '^'               | normal command to be executed after        |
-|                    |                   | jumping to line                            |
+| after_jump_do      | '^'               | command to be executed after               |
+|                    |                   | jumping to line (only in normal mode)      |
 +--------------------+-------------------+--------------------------------------------+
 ```

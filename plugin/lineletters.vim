@@ -1,7 +1,7 @@
-if exists('g:loaded_lineletters')
-  finish
-endif
-let g:loaded_lineletters = 1
+"if exists('g:loaded_lineletters')
+"  finish
+"endif
+"let g:loaded_lineletters = 1
 
 " Create the list of symbols to be used for the signs by combining the
 " main chars with the prefix chars; characters that are included in both
@@ -73,7 +73,8 @@ function! s:place_sings()
   endfor
 endfunction
 
-function! s:go_to_sign()
+" Return the line based on sign selected by the user
+function! s:line()
   let l:signs = sign_getplaced(
         \ expand('%'),
         \ { 'group': s:group })[0]['signs']
@@ -86,22 +87,30 @@ function! s:go_to_sign()
       let l:second_char = nr2char(getchar())
       let l:sign = s:group . l:first_char . l:second_char
     endif
-
-    let l:line = filter(l:signs, { idx, val -> val['name'] == l:sign })
-    exec 'normal! ' l:line[0]['id'] . 'gg' . s:after_jump_do
-
+    let l:line =
+          \ filter(l:signs, { idx, val -> val['name'] == l:sign })[0]['id']
   " E684: list index out of range
   catch /E684/
+    let l:line = 0
   endtry
-endfunction
 
-function! s:line_letters()
-  call s:place_sings()
-  redraw
-  call s:go_to_sign()
-  call sign_unplace(s:group)
+  return l:line
 endfunction
 
 call s:define_signs()
 
-nnoremap <silent> <Plug>LineLetters :call <SID>line_letters()<CR>
+function! s:lineletters()
+  let l:after_jump = mode() == 'n' ? s:after_jump_do : ''
+  call s:place_sings()
+  redraw
+  let l:l = s:line()
+  call sign_unplace(s:group)
+  if l:l == 0
+    return
+  endif
+
+  return l:l . 'gg' . l:after_jump
+endfunction
+
+nnoremap <expr> <Plug>LineLetters <SID>lineletters()
+vnoremap <expr> <Plug>LineLetters <SID>lineletters()
