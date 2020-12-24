@@ -47,14 +47,15 @@ let g:lineletters_settings = {
 +--------------------+-------------------+--------------------------------------------+
 | Option             | Default           | Description                                |
 |--------------------|-------------------|--------------------------------------------|
-| main_chars         | ['a', ..., 'z']   | main characters used for the signs column  |
+| main_chars         | ['a', ..., 'z']   | Main characters used for the signs column. |
+|                    |                   | An empty list disables the plugin          |
 |--------------------|-------------------|--------------------------------------------|
-| prefix_chars       | [',', 'j', 'f']   | characters used to prefix main_chars after |                                           
-|                    |                   | they are consumed                          |                                          
+| prefix_chars       | [',', 'j', 'f']   | Characters used to prefix main_chars after |
+|                    |                   | they are consumed                          |
 |--------------------|-------------------|--------------------------------------------|
-| highlight_group    | 'LineNr'          | highlight group used to colorize the signs |
+| highlight_group    | 'LineNr'          | Highlight group used to colorize the signs |
 |--------------------|-------------------|--------------------------------------------|
-| after_jump_do      | '^'               | command to be executed after               |
+| after_jump_do      | '^'               | Command to be executed after               |
 |                    |                   | jumping to line (only in normal mode)      |
 +--------------------+-------------------+--------------------------------------------+
 ```
