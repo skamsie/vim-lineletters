@@ -123,12 +123,23 @@ endfunction
 call s:define_signs()
 
 function! s:lineletters()
+
+  " In vim the sign column is closed after the time set by 'updatetime' if
+  " some plugins are enabled, like 'airline' or 'gitgutter'.
+  " Increase the updatetime temporarily to at least give the user enough time
+  " to react. This does not happen with neovim.
+  let l:ut = &updatetime
+  exec 'set updatetime=10000'
+
   let l:after_jump = mode() == 'n' ? s:after_jump_do : ''
   let l:vl = s:visible_lines()
   call s:place_sings(l:vl)
   redraw
   let l:l = s:line(l:vl)
   call sign_unplace(s:group)
+
+  exec 'set updatetime=' . l:ut
+
   if l:l == 0
     return
   endif
