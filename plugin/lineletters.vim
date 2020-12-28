@@ -4,12 +4,11 @@ endif
 let g:loaded_lineletters = 1
 
 " Create the list of symbols to be used for the signs by combining the
-" main chars with the prefix chars; characters that are included in both
-" lists will automatically be excluded from main chars.
+" main chars with the prefix chars
 " Example:
 "   main_chars = ['a', 'b', 'c']
-"   prefix_chars = [';', 'b']
-" Returns: ['a', 'c', ';a', ';b', ';c', 'ba', 'bb', 'bc']
+"   prefix_chars = [',', ';']
+" Returns: ['a', 'b', 'c', ',a', ',b', ',c', ';a', ';b', ';c']
 function! s:symbols(main_chars, prefix_chars)
   let l:symbols = copy(a:main_chars)
   for c in a:prefix_chars
@@ -63,9 +62,7 @@ function! s:define_signs()
 endfunction
 
 function s:signs(vl)
-  let l:div2i = len(a:vl) / len(s:main_chars)
-  let l:div2f = len(a:vl) / str2float(len(s:main_chars) . '.0')
-  let l:idx = l:div2i == l:div2f ? l:div2i - 2 : l:div2i -1
+  let l:idx = len(a:vl) / len(s:main_chars) - 1
 
   " remove clashing symbols depending on the number of visible lines
   " ex: if 'ja' exists, 'j' has to be removed
@@ -123,7 +120,6 @@ endfunction
 call s:define_signs()
 
 function! s:lineletters()
-
   " In vim the sign column is closed after the time set by 'updatetime' if
   " some plugins are enabled, like 'airline' or 'gitgutter'.
   " Increase the updatetime temporarily to at least give the user enough time
