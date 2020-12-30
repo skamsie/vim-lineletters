@@ -4,7 +4,7 @@ Jump to any visible line in the buffer by using letters instead of numbers. Work
 
 **Why?** Because letters are much easier to touch type than numbers (๑˃̵ᴗ˂̵)و
 
-<img src="https://user-images.githubusercontent.com/7014744/102135236-f77a5b00-3e57-11eb-81d3-d93689fbe853.gif" width="732"/>
+![](https://github.com/skamsie/depozit/blob/main/lineletters.gif)
 
 ## Install
 
